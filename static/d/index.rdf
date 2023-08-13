@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+  xmlns="http://purl.org/rss/1.0/"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+  xmlns:cc="http://web.resource.org/cc/"
+  xml:lang="ja">
+
+  <channel rdf:about="http://www.nekomimist.org/d/index.rdf">
+     <dc:language>ja</dc:language>
+     <title>ねこみみど〜らくにっき</title>
+     <dc:creator>nekomimist</dc:creator>
+     <dc:rights>Copyright ...</dc:rights>
+     <image rdf:resource="../banner.png"/>
+     <link>http://www.nekomimist.org/d/</link>
+     <description>あるいは、ねこみみ嗜好者の猫耳東風な日々の雑記</description>
+     <sy:updatePeriod>daily</sy:updatePeriod>
+     <sy:updateBase>2017-04-29T23:33:57+09:00</sy:updateBase>
+     <items>
+       <rdf:Seq>
+        <rdf:li rdf:resource="http://www.nekomimist.org/d/201704.html#d29_t1" />
+        <rdf:li rdf:resource="http://www.nekomimist.org/d/201704.html#d23_t1" />
+        <rdf:li rdf:resource="http://www.nekomimist.org/d/201704.html#d22_t1" />
+        <rdf:li rdf:resource="http://www.nekomimist.org/d/201704.html#d11_t1" />
+        <rdf:li rdf:resource="http://www.nekomimist.org/d/201704.html#d08_t1" />
+        <rdf:li rdf:resource="http://www.nekomimist.org/d/201704.html#d03_t1" />
+        <rdf:li rdf:resource="http://www.nekomimist.org/d/201703.html#d25_t1" />
+        <rdf:li rdf:resource="http://www.nekomimist.org/d/201703.html#d25_t2" />
+        <rdf:li rdf:resource="http://www.nekomimist.org/d/201703.html#d15_t1" />
+        <rdf:li rdf:resource="http://www.nekomimist.org/d/201703.html#d15_t2" />
+        <rdf:li rdf:resource="http://www.nekomimist.org/d/201703.html#d15_t3" />
+        <rdf:li rdf:resource="http://www.nekomimist.org/d/201703.html#d12_t1" />
+        <rdf:li rdf:resource="http://www.nekomimist.org/d/201703.html#d05_t1" />
+       </rdf:Seq>
+     </items>
+  </channel>
+  <item rdf:about="http://www.nekomimist.org/d/201704.html#d29_t1">
+    <title>はてなblogに移動する準備を [COMP]</title>
+    <link>http://www.nekomimist.org/d/201704.html#d29_t1</link>
+    <description>blogsyncがいい感じだったので、とりあえずblogsync-mode.elをでっちあげてみた。</description>
+    <content:encoded><![CDATA[	<p><a href="201704.html#d29_t1_1">+</a>
+	<a href="https://github.com/motemen/blogsync">blogsync</a>がいい感じだったので、とりあえず<a href="https://github.com/nekomimist/blogsync-mode.el">blogsync-mode.el</a>をでっちあげてみた。</p>
+
+	<p><a href="201704.html#d29_t1_2">+</a>
+	とりあえず自前のwordpressを<a href="http://nekomimist.hatenablog.com/">はてなブログに移行</a>してみた。もうちょっと周囲を整えたら、この日記もはてなblogに移行できるかも。</p>
+
+]]></content:encoded>
+    <dc:date>2017-04-29T23:33:56+09:00</dc:date>  </item>
+  <item rdf:about="http://www.nekomimist.org/d/201704.html#d23_t1">
+    <title>Emacsのフォント [COMP]</title>
+    <link>http://www.nekomimist.org/d/201704.html#d23_t1</link>
+    <description>ずっとMeiryoKe_Consoleを使ってたけど、濁点と半濁点や、1ilや0Oなど、見分けづらいフォントを見分けられるフォントにしたいとふと思った。</description>
+    <content:encoded><![CDATA[	<p><a href="201704.html#d23_t1_1">+</a>
+	ずっとMeiryoKe_Consoleを使ってたけど、濁点と半濁点や、1ilや0Oなど、見分けづらいフォントを見分けられるフォントにしたいとふと思った。</p>
+
+	<p><a href="201704.html#d23_t1_2">+</a>
+	まずは<a href="http://www.rs.tus.ac.jp/yyusa/ricty.html">Ricty</a>を試そうと思って、FreeBSD上で作ってみたら全角の文字ピッチがおかしかった。os2version_reviser.shを通してもダメ。ちょっと考えてWindows10 PCのBash on Ubuntu on Windowsにfontforgeとpython-fontforgeを入れて生成してos2version_reviser.shを通したらOKだった。案外BoUoWは便利かもしれない。</p>
+
+	<p><a href="201704.html#d23_t1_3">+</a>
+	で、Rictyや<a href="https://myrica.estable.jp/">Myrica</a>等いろいろ試したあげく、<a href="http://mix-mplus-ipa.osdn.jp/migu/">Migu 1M</a>にした。</p>
+
+	<p><a href="201704.html#d23_t1_4">+</a>
+	60型4KTVで150%拡大で使う限り、RictyやMyricaの半角フォントに当てられているInconsolataがちょっとだけ見辛い感じがした。別のモニタならまた別の感想になるかもしれないけれど。</p>
+
+]]></content:encoded>
+    <dc:date>2017-04-23T09:33:18+09:00</dc:date>  </item>
+  <item rdf:about="http://www.nekomimist.org/d/201704.html#d22_t1">
+    <title>艦これ。 [GAME]</title>
+    <link>http://www.nekomimist.org/d/201704.html#d22_t1</link>
+    <description>112人目に江風、113人目に山風、114人目に藤波、115人目としてCommandant Testeさんとそれぞれ以下略。</description>
+    <content:encoded><![CDATA[	<p><a href="201704.html#d22_t1_1">+</a>
+	112人目に<a href="https://twitter.com/nekomimist/status/855683219592761344">江風</a>、113人目に<a href="https://twitter.com/nekomimist/status/855683423108837377">山風</a>、114人目に<a href="https://twitter.com/nekomimist/status/855683548912783360">藤波</a>、115人目として<a href="https://twitter.com/nekomimist/status/855808458553217027">Commandant Testeさん</a>とそれぞれ以下略。</p>
+
+]]></content:encoded>
+    <dc:date>2017-04-23T00:42:45+09:00</dc:date>  </item>
+  <item rdf:about="http://www.nekomimist.org/d/201704.html#d11_t1">
+    <title>艦これ。 [GAME]</title>
+    <link>http://www.nekomimist.org/d/201704.html#d11_t1</link>
+    <description>もう4日前だけど、鹿島さんと111人目の以下略。</description>
+    <content:encoded><![CDATA[	<p><a href="201704.html#d11_t1_1">+</a>
+	もう4日前だけど、<a href="https://twitter.com/nekomimist/status/850394058199638017">鹿島さんと111人目の以下略</a>。</p>
+
+]]></content:encoded>
+    <dc:date>2017-04-23T00:43:22+09:00</dc:date>  </item>
+  <item rdf:about="http://www.nekomimist.org/d/201704.html#d08_t1">
+    <title>Windows 10 Creators Update [COMP]</title>
+    <link>http://www.nekomimist.org/d/201704.html#d08_t1</link>
+    <description>自宅メインPCはさっさとCreators Updateに上げたが、特に何事もなくアップデートできた。Surface Pro4は降ってくるまでちょっと様子見の予定。</description>
+    <content:encoded><![CDATA[	<p><a href="201704.html#d08_t1_1">+</a>
+	自宅メインPCはさっさとCreators Updateに上げたが、特に何事もなくアップデートできた。Surface Pro4は降ってくるまでちょっと様子見の予定。</p>
+
+	<p><a href="201704.html#d08_t1_2">+</a>
+	4Kディスプレイを利用しているうちの場合、DPIスケーリングの改善の影響が大きいはずなのだが、DPIawareでないツールは積極的に代替を探していた関係上、効果があるのはWindows標準ツールというオチが :-)</p>
+
+]]></content:encoded>
+    <dc:date>2017-04-09T01:28:50+09:00</dc:date>  </item>
+  <item rdf:about="http://www.nekomimist.org/d/201704.html#d03_t1">
+    <title>Samba 4.3から4.6への移行で悩んだ話 [COMP]</title>
+    <link>http://www.nekomimist.org/d/201704.html#d03_t1</link>
+    <description>週末に自宅のFreeBSD 11.0Rマシンのsambは4.3で、2017-03-07にEOLになってたことに気付いたので、Samba 4.6に上げてみたら、同じsmb.confなのにWindows10からアクセスできなってわりと往生した。</description>
+    <content:encoded><![CDATA[	<p><a href="201704.html#d03_t1_1">+</a>
+	週末に自宅のFreeBSD 11.0Rマシンのsambは4.3で、2017-03-07にEOLになってたことに気付いたので、Samba 4.6に上げてみたら、同じsmb.confなのにWindows10からアクセスできなってわりと往生した。</p>
+
+	<p><a href="201704.html#d03_t1_2">+</a>
+	過去の設定を消してほぼデフォルトに戻してもダメだったので、Sambaのlog levelを3にしてログを眺めてみたら、どうもNTLMv1でWindows10からアクセスしに来てエラーになっている感じだった。</p>
+
+	<p><a href="201704.html#d03_t1_3">+</a>
+	Samba 4.6はNTLMv1を弾くのか? そもそもなんでWindows10がNTLMv1を投げてくるねん、ということでで、Windows10のグループポリシーの、[コンピューターの構成]-[ポリシー]-[Windows の設定]-[セキュリティの設定]-[ローカル ポリシー]-[セキュリティ オプション]の[ネットワーク セキュリティ: LAN Manager 認証レベル]を「NTLMv2 応答のみ送信 (LM と NTLM を拒否する)」に変更したらつながった。Vistaにした頃あたりの試行錯誤で設定が古いほうに転んでいたのだろうか。</p>
+
+	<p><a href="201704.html#d03_t1_4">+</a>
+	Samba 4.5で<a href="https://wiki.samba.org/index.php/Samba_4.5_Features_added/changed#NTLMv1_authentication_disabled_by_default">NTLMv1がデフォルトで無効になった</a>のが原因だったのだろうな。まあ、設定見直せたし、この試行錯誤も無駄じゃなかったことにしよう……。</p>
+
+]]></content:encoded>
+    <dc:date>2017-04-03T20:39:24+09:00</dc:date>  </item>
+  <item rdf:about="http://www.nekomimist.org/d/201703.html#d25_t1">
+    <title>英語学習 [MISC]</title>
+    <link>http://www.nekomimist.org/d/201703.html#d25_t1</link>
+    <description>リスニングと会話の語彙力強化のためにNHKの英語ラジオを適当に拾って毎日聞いてみることにした。先日20年ぶりに受けた社内TOEICもリスニングが思ったより悪かったしね。まあ、TOEICが英語で仕事する上で何かの役に立つわけでもないけれど、せめて730点くらいは取れるようになっておこう。</description>
+    <content:encoded><![CDATA[	<p><a href="201703.html#d25_t1_1">+</a>
+	リスニングと会話の語彙力強化のためにNHKの英語ラジオを適当に拾って毎日聞いてみることにした。先日20年ぶりに受けた社内TOEICもリスニングが思ったより悪かったしね。まあ、TOEICが英語で仕事する上で何かの役に立つわけでもないけれど、せめて730点くらいは取れるようになっておこう。</p>
+
+]]></content:encoded>
+    <dc:date>2017-03-25T11:41:42+09:00</dc:date>  </item>
+  <item rdf:about="http://www.nekomimist.org/d/201703.html#d25_t2">
+    <title>arrows NX F-01J破損 [MISC]</title>
+    <link>http://www.nekomimist.org/d/201703.html#d25_t2</link>
+    <description>自転車で走行中にポケットからコンクリ+砂利の上に落下という超不幸な事態が発生してさすがにタフなのが売りのF-01Jもパネルが割れてしまった。タッチパネルと液晶に問題はなさそうだったので、とりあえずdocomoの修理に出してみたが、さて、いくらかかるのやら。</description>
+    <content:encoded><![CDATA[	<p><a href="201703.html#d25_t2_1">+</a>
+	自転車で走行中にポケットからコンクリ+砂利の上に落下という超不幸な事態が発生してさすがにタフなのが売りのF-01Jもパネルが割れてしまった。タッチパネルと液晶に問題はなさそうだったので、とりあえずdocomoの修理に出してみたが、さて、いくらかかるのやら。</p>
+
+	<p><a href="201703.html#d25_t2_2">+</a>
+	とりあえずサブのNextbit Robinをメインに昇格してしのぐこととしよう。RobinもAndroid 7.0が来たし、使い勝手の変化を確認する上でもちょうどいいかも。</p>
+
+]]></content:encoded>
+    <dc:date>2017-03-25T11:39:39+09:00</dc:date>  </item>
+  <item rdf:about="http://www.nekomimist.org/d/201703.html#d15_t1">
+    <title>UNCのパスを大量に含んだ場合のhelm-recentfが遅い [COMP]</title>
+    <link>http://www.nekomimist.org/d/201703.html#d15_t1</link>
+    <description>最近会社の環境でhelm-recentfがやけに遅くて悩んでいた。recentfの保存数は200くらで素のrecentfは遅くなくて、helm-recentfだけが10秒以上待たされる。</description>
+    <content:encoded><![CDATA[	<p><a href="201703.html#d15_t1_1">+</a>
+	最近会社の環境でhelm-recentfがやけに遅くて悩んでいた。recentfの保存数は200くらで素のrecentfは遅くなくて、helm-recentfだけが10秒以上待たされる。</p>
+
+	<p><a href="201703.html#d15_t1_2">+</a>
+	<a href="https://www.emacswiki.org/emacs/EmacsLispProfiler">Emacs Lisp Profiler</a>で調べると、helm-highlight-filesが遅かった。この関数はファイル一覧内のファイルの属性に応じてfaceをつける関数で、file-remote-pがtを返すようなファイル<sup><small>(<a href="#f20170315_1" id="b20170315_1">*1</a>)</small></sup>や、helm-file-on-mounted-network-p がtを返すようなファイルは処理を省くようになっているようだった。</p>
+
+	<p><a href="201703.html#d15_t1_3">+</a>
+	で、recentfの中に、UNCパスでアクセスするクソ遅いファイルサーバ上のファイルが多くあり、これらに対してはfile-remote-pもhelm-file-on-mounted-network-pもnilを返したため、クソ遅いファイルサーバに一々アクセスしてfile/dir/symlinkか判定していたのが原因だとわかった。</p>
+
+	<p><a href="201703.html#d15_t1_4">+</a>
+	それで、helm-file-on-mounted-network-pがtを返すような設定を探ってみたが、できたとしても、途中でディレクトリの存在有無確認を行ってしまうため、遅いサーバへアクセスしてしまうのは変わらず、あまり改善にならなかった。</p>
+
+	<p><a href="201703.html#d15_t1_5">+</a>
+	んで、ちょっとだけ悩んで、helm-recentfにfaceなくても特に困らんなということで、こう↓してみた。</p>
+
+	<div class="code"><pre><code>(if (equal system-type 'windows-nt)
+    (defun helm-highlight-files (files _source) files))</code></pre></div>
+
+	<p><a href="201703.html#d15_t1_6">+</a>
+	helm-recentfやhelm-miniのファイル一覧からfaceはなくなってしまうが、劇的に早くなる。とりあえずはこれでいいか。</p>
+
+	<p><a href="201703.html#d15_t1_7">+</a>
+	本質的にはUNCパス上のファイルを修飾対象外にできるようにhelm-highlight-filesを変更するのがよいだろうな。クソ遅いファイルサーバをなんとかするのが一番いいけれど。</p>
+
+]]></content:encoded>
+    <dc:date>2017-03-15T21:10:24+09:00</dc:date>  </item>
+  <item rdf:about="http://www.nekomimist.org/d/201703.html#d15_t2">
+    <title>PC関連の物欲 [COMP]</title>
+    <link>http://www.nekomimist.org/d/201703.html#d15_t2</link>
+    <description>Ryzenは気になるのだが、現状Core i7 4790Kで全く困ってないのだよなー……。Intelも対RyzenでBasin Fallsプラットフォーム(Skylake-X/Kabylake-X)を安値で提供してくる可能性があるし、ちょっと様子見しよう。</description>
+    <content:encoded><![CDATA[	<p><a href="201703.html#d15_t2_1">+</a>
+	Ryzenは気になるのだが、現状Core i7 4790Kで全く困ってないのだよなー……。Intelも対RyzenでBasin Fallsプラットフォーム(Skylake-X/Kabylake-X)を安値で提供してくる可能性があるし、ちょっと様子見しよう。</p>
+
+	<p><a href="201703.html#d15_t2_2">+</a>
+	一方でGPUはGeForce GTX 970よりもう少しパワーが欲しい状況だ。GeForce GTX 1070を買えばいいんだろうが、、GPUとしてはRADEONのほうが好きなのでVegaに期待したい。いつ出るんだろう。</p>
+
+]]></content:encoded>
+    <dc:date>2017-03-15T21:10:24+09:00</dc:date>  </item>
+  <item rdf:about="http://www.nekomimist.org/d/201703.html#d15_t3">
+    <title>MDR-1000X [AUDIO]</title>
+    <link>http://www.nekomimist.org/d/201703.html#d15_t3</link>
+    <description>自宅PCで英語学習するのに使いでのよいヘッドセットが欲しくなった。NW-M505を持ってるけど、Bluetoothの到達距離がイマイチだったのと、オーバーイヤーかつBluetoothのもの……と考えて勢い余ってSONY MDR-1000Xを買った。だいたい4万円。</description>
+    <content:encoded><![CDATA[	<p><a href="201703.html#d15_t3_1">+</a>
+	自宅PCで英語学習するのに使いでのよいヘッドセットが欲しくなった。NW-M505を持ってるけど、Bluetoothの到達距離がイマイチだったのと、オーバーイヤーかつBluetoothのもの……と考えて勢い余ってSONY MDR-1000Xを買った。だいたい4万円。</p>
+
+	<p><a href="201703.html#d15_t3_2">+</a>
+	フィット感はよい。ノイズキャンセルもかなりよい。モノとしての質感は「まあこんなもの」という感じ。BluetoothはNW-M505より格段に切れづらくなって、リビングを出て少々離れても切れない。マイクは少なくとも英語教材を使う限りは問題なし。</p>
+
+	<p><a href="201703.html#d15_t3_3">+</a>
+	タッチコントロールは面白いが誤クリックしそうではある。でも手で押さえて周囲の音を聞けるというI/Fはよいと思う。</p>
+
+]]></content:encoded>
+    <dc:date>2017-03-15T22:18:19+09:00</dc:date>  </item>
+  <item rdf:about="http://www.nekomimist.org/d/201703.html#d12_t1">
+    <title>艦これ。3月の5-5(残り) [GAME]</title>
+    <link>http://www.nekomimist.org/d/201703.html#d12_t1</link>
+    <description>荒潮任務で残りゲージ3になったので、高速編成支援なしを試してみた。</description>
+    <content:encoded><![CDATA[	<p><a href="201703.html#d12_t1_1">+</a>
+	荒潮任務で残りゲージ3になったので、高速編成支援なしを試してみた。</p>
+
+	<ul>
+		<li>Roma改/141	381mm/50 三連装砲+9/381mm/50 三連装砲+8/九七式徹甲弾+7/九八式水上偵察機(夜偵)+8Lv7/応急修理要員</li>
+		<li>Iowa改/130	16inch三連装砲 Mk.7+6/試製46cm連装砲+6/九一式徹甲弾+6/零式水上偵察機Lv7/増設バルジ(大型艦)</li>
+		<li>大鳳改/149	流星(六〇一空)Lv7/天山一二型(友永隊)Lv7/九七式艦攻(友永隊)/零式艦戦52型(熟練)+10Lv7/応急修理要員</li>
+		<li>翔鶴改二甲/147	天山一二型(村田隊)Lv7/噴式景雲改Lv4/零式艦戦53型(岩本隊)+10Lv7/零式艦戦21型(熟練)+10Lv7/応急修理要員</li>
+		<li>瑞鶴改二甲/147	橘花改Lv7/流星(六〇一空)Lv7/零式艦戦52型(熟練)+10Lv7/彩雲(東カロリン空)Lv7/応急修理要員</li>
+		<li>赤城改Lv149	流星改Lv7/天山一二型(村田隊)Lv7/九七式艦攻(友永隊)/烈風改/応急修理要員</li>
+	</ul>
+
+	<p><a href="201703.html#d12_t1_2">+</a>
+	こんな感じ。初戦で制空権確保で残りは優勢。支援は一切なし。途中でRomaさんはItaliaさんと交代。</p>
+
+	<ul>
+		<li>Italia/141	381mm/50 三連装砲+9/381mm/50 三連装砲+8/一式徹甲弾/九八式水上偵察機(夜偵)+8Lv7/応急修理要員</li>
+	</ul>
+
+	<p><a href="201703.html#d12_t1_3">+</a>
+	これで5出撃して2戦目翔鶴さん大破撤退1回、E風1回、ボスA勝利3回で終わり。ダメコン消費は1回。問題なく行けますなあ。</p>
+
+]]></content:encoded>
+    <dc:date>2017-03-12T21:56:04+09:00</dc:date>  </item>
+  <item rdf:about="http://www.nekomimist.org/d/201703.html#d05_t1">
+    <title>艦これ。荒潮改二5-5任務 [GAME]</title>
+    <link>http://www.nekomimist.org/d/201703.html#d05_t1</link>
+    <description>こんな艦隊で挑んでみた。もちろん駆逐2戦艦2正空2による全力の前線支援と決戦支援の両支援あり。</description>
+    <content:encoded><![CDATA[	<p><a href="201703.html#d05_t1_1">+</a>
+	こんな艦隊で挑んでみた。もちろん駆逐2戦艦2正空2による全力の前線支援と決戦支援の両支援あり。</p>
+
+	<ul>
+		<li>荒潮改二/88	10cm連装高角砲+高射装置+7x2/13号対空電探改+10/応急修理要員</li>
+		<li>Iowa改/130	16inch三連装砲 Mk.7+6/試製41cm三連装砲+6/九一式徹甲弾+6/九八式水上偵察機(夜偵)+9Lv7/増設バルジ(大型艦)</li>
+		<li>大鳳改/149	流星(六〇一空)Lv7/天山一二型(友永隊)Lv7/零式艦戦53型(岩本隊)+10Lv7/零式艦戦52型(熟練)+10Lv7/応急修理要員</li>
+		<li>翔鶴改二甲/147	噴式景雲改Lv7/天山一二型(村田隊)Lv7/烈風改Lv7x2/応急修理女神</li>
+		<li>瑞鶴改二甲/147	橘花改Lv7/流星(六〇一空)Lv7/零式艦戦52型(熟練)+10Lv7/彩雲(東カロリン空)Lv7/応急修理女神</li>
+		<li>大潮改二/126	四式水中聴音機+6x2/三式爆雷投射機+8/応急修理女神</li>
+	</ul>
+
+	<p><a href="201703.html#d05_t1_2">+</a>
+	これでS勝利→E風→荒潮大破撤退→E風→E風→荒潮大破撤退→荒潮大破撤退→E風→S勝利と地獄のような展開を経て9出撃で完了。</p>
+
+	<p><a href="201703.html#d05_t1_3">+</a>
+	荒潮の補強増設は8出撃目の時に開けた。むちゃくちゃエリレに愛されてて爆撃食らうわ先制雷撃食らうわ砲撃食らうわで散々だった。さっさと補強増設してたら3回目か6回目か7回目で終わってたはずで……覚悟が足りなかったなあ。</p>
+
+	<p><a href="201703.html#d05_t1_4">+</a>
+	対潜担当は大潮。随伴駆逐は朝潮改二丁にする人が多そうだが、うちでは駆逐嫁No4かつ補強増設済みの大潮を使わない手はなかった<sup><small>(<a href="#f20170305_1" id="b20170305_1">*1</a>)</small></sup>。そしてS勝利2回に見事に貢献してくれた。</p>
+
+	<p><a href="201703.html#d05_t1_5">+</a>
+	残りの4枠はテンプレっぽく高速戦艦で最も固いアイオワと、中破でも動ける装甲空母を3人。橘花改と噴式景雲改もかなり効果的に働いてくれた。</p>
+
+	<p><a href="201703.html#d05_t1_6">+</a>
+	しかし高速編成も悪くないかもしれないとは思った。今月の5-5残り3回は支援なしの戦2空4でやってみるかな?</p>
+
+]]></content:encoded>
+    <dc:date>2017-03-05T22:07:50+09:00</dc:date>  </item>
+  <image rdf:about="../banner.png">
+    <title>ねこみみど〜らくにっき</title>
+    <link>http://www.nekomimist.org/d/</link>
+    <url>../banner.png</url>
+  </image>
+</rdf:RDF>

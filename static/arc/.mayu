@@ -1,0 +1,163 @@
+# .mayu for 窓使いの憂鬱 - dot109.mayu
+# by IZUMI Task <neko@cc.rim.or.jp>
+
+include "109.mayu"		# 109 キーボード設定
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# キーシーケンス
+#
+
+keyseq $WindowClose = A-F4
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Global キーマップ
+# &Windows～機能は基本的にHJKLキー周辺に集約させる(NetHack風味 :-p)
+
+keymap Global
+ key *I-C-Yen		=> $ToggleIME		# IME ON/OFF をするキーの指定
+ key C-S-A-Period	=> &WindowLower		# ウィンドウを一番下へ
+ key C-S-A-Comma	=> &WindowRaise		# ウィンドウを一番上へ
+ key C-S-A-O		=> &WindowMaximize	# ウィンドウの最大化 (IE全画面)
+ key C-S-A-I		=> &WindowMinimize	# ウィンドウの最小化
+ key C-S-A-U		=> &WindowVMaximize	# ウィンドウの縦最大化
+ key C-S-A-Y		=> &WindowHMaximize	# ウィンドウの横最大化
+ key C-S-A-H		=> &WindowMove(-16, 0)	# ウィンドウの移動
+ key C-S-A-L		=> &WindowMove(16, 0)	#	〃
+ key C-S-A-K		=> &WindowMove(0, -16)	#	〃
+ key C-S-A-J		=> &WindowMove(0, 16)	#	〃
+ key C-S-A-Left		=> &WindowMove(-1, 0)	#	〃
+ key C-S-A-Right	=> &WindowMove(1, 0)	#	〃
+ key C-S-A-Up		=> &WindowMove(0, -1)	#	〃
+ key C-S-A-Down		=> &WindowMove(0, 1)	#	〃
+ key C-S-A-A		=> &WindowClingToLeft	# ウィンドウを左に寄せる
+ key C-S-A-S		=> &WindowClingToRight	# ウィンドウを右に寄せる
+ key C-S-A-W		=> &WindowClingToTop	# ウィンドウを上に寄せる
+ key C-S-A-X		=> &WindowClingToBottom	# ウィンドウを下に寄せる
+ key C-S-A-P		=> &WindowMoveVisibly	# ウィンドウを見える位置へ移動
+ key C-S-A-T		=> &WindowToggleTopMost	# 最前面トグル
+ key C-S-A-D		=> &WindowIdentify	# ウィンドウの素性を調べる
+
+ if ( KBD109 )
+   mod control += 英数			# 英数を Control に
+   key *英数		=> *LControl		#	〃
+ else
+   mod control += CapsLock			# CapsLock を Control に
+   key *CapsLock	=> *LControl		#	〃
+ endif
+ key *ScrollLock	=> $CapsLock		# ScrollLock を CapsLock に
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 全てデフォルトのキーマップの定義
+#
+
+keymap	KeymapDefault => &Default
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 窓使いの憂鬱の仮想キー調査ウィンドウでは全てデフォルト
+#
+
+window	MayuInvestigate /mayu\.exe:#32770:mayuFocus$/ : KeymapDefault
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# コントロールの設定
+#
+
+## Edit, RichEdit Control .....................................................
+
+include	"emacsedit.mayu"
+window	EditControl /:Edit$/ : EmacsEdit
+window	RichEditControl /:RichEdit$/ : EmacsEdit
+
+
+## SysListView32 Control ......................................................
+
+window	SysListView32 /:SysListView32$/ : EmacsMove
+# key C-A		=> &Default		# 全て選択
+# key C-E		=> &Default		# Web 検索
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Windows の一般的設定
+#
+
+keymap2	GeneralC-X : EmacsC-X
+ mod !shift !alt !control !windows
+ key C-S		=> C-S			# 上書き保存(S)
+ key C-W		=> LAlt F A		# 名前を付けて保存(A)...
+ key C-F		=> C-O			# 開く(O)...
+ key K			=> C-N			# 新規作成(N)
+ key C-C		=> A-Q			# 終了(X)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 各アプリケーションの設定
+#
+
+## Emacs ......................................................................
+
+window	Meadow	/:Meadow$/ : Global
+ key C-Yen		=> &Default
+window	MULE	/:MULE$/ : Global
+ key C-Yen		=> &Default
+window	Emacs	/:Emacs$/ : Global
+ key C-Yen		=> &Default
+
+
+## Notepad ....................................................................
+
+keymap2	NotepadC-X : GeneralC-X
+ mod !shift !alt !control !windows
+ key C-S		=> LAlt F S		# 上書き保存(S)
+ key C-F		=> LAlt F O		# 開く(O)...
+ key K			=> LAlt F N		# 新規作成(N)
+ key C-C		=> $WindowClose		# メモ帳の終了(X)
+
+window	Notepad /:Notepad:Edit$/ : EmacsEdit
+ key C-X		=> &Prefix(NotepadC-X)
+ key C-S		=> F3			# 検索(F)...
+ key M-J		=> C-G
+
+
+## Microsoft Power Point ......................................................
+
+keymap2	PowerPointC-X : GeneralC-X
+ mod !shift !alt !control !windows
+ key C-C		=> $WindowClose		# 終了(X)
+
+window	PowerPoint /POWERPNT\.EXE:.*:(paneClassDC|REComboBox20W|RichEdit20W)$/\
+			: EmacsEdit
+ key C-X		=> &Prefix(PowerPointC-X)
+
+
+## Microsoft Visual Basic 6.0 .................................................
+
+window	VisualBasic /vb6\.exe:.*:VbaWindow$/ : EmacsEdit
+ key C-X		=> &Prefix(GeneralC-X)
+
+## Microsoft Word .............................................................
+
+window	MicrosoftWord /WINWORD\.EXE:.*:_WwG$/ : EmacsEdit
+ key C-X		=> &Prefix(GeneralC-X)
+
+
+## TeraTerm ...................................................................
+
+window	TeraTerm /TTermPRO\.exe:VTWin32$/ : Global
+ if ( KBD109 )
+   key C-Slash		=> C-S-HyphenMinus	# C-_ を入力
+ else
+   key C-Slash		=> C-X U		# ^/ は emacs の undo
+ endif
+
+## SuperTagEditor .............................................................
+
+window SuperTagEditor /SuperTagEditor\.exe:.*:SysListView32$/ : Global
+ key C-S		=> &Default		# 保存(S)
+
+## Consoleはほっとく ..........................................................
+
+window ConsoleWindowClass : Global

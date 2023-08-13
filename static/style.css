@@ -1,0 +1,153 @@
+/* 標準部分 */
+body {
+/*line-height: 120%;*/
+  background-color: white;
+  background-image: url(./icon/bg.png);
+  color: black;
+}
+
+/* リンクとか */
+a,a:link,a:active {
+  text-decoration: none;
+  color: #7f0000;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #7f3f00;
+}
+
+.mutter {
+  font-size: 60%;
+}
+
+.add {
+  color: red;
+}
+
+.laud,.big {	/* bigはobosolate */
+  font-size: 140%;
+}
+
+H1, H2, H3, H4 {
+  color: black;
+  border-bottom: thin black solid;
+  margin-top: 1em;
+  clear: both;
+}
+
+UL {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+UL UL {
+  margin-top: 0em;
+  margin-bottom: 0.5em;
+}
+
+P {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+EM {
+  font-style: normal;
+  text-decoration: underline;
+}
+
+STRONG span.strong {
+  font-weight: bolder;
+}
+
+ADDRESS {
+  margin-top: 1em;
+  font-style: italic;
+  border-top: thin black solid;
+  padding-top: 0.2em;
+  text-align: right;
+}
+
+IMG {
+  vertical-align: middle;
+}
+
+div.title { 
+  text-align: center;
+  float: left;
+  width: 50%;
+}
+
+div.titlemenu { 
+  float: right;
+  width: 50%;
+}
+
+/* span関連 */
+span.banner IMG {
+  vertical-align: middle;
+}
+
+/* div関連 */
+div.update {
+  text-align: right;
+  font-weight: bold;
+}
+
+div.group {
+  /* background: #e0ffe0; */
+  background-color: #ffeeee;
+  /* background: #eeeeff; */
+  padding: 0.5em;
+  margin: 0.5em;
+}
+
+div.group H3 {
+  color: black;
+  /* background: #c0ffd0; */
+  background-color: #ffc0c0;
+  /* background: #c0c0ff; */
+  border-style: none;
+  padding: 0.2em 0.5em;
+  margin: 0 0;
+}
+
+div.group H4 {
+  color: black;
+  /* background: #c0ffd0; */
+  /* background: #d0d0ff; */
+  background: #ffd0d0;
+  padding: 0.2em 0.5em;
+  margin: 0 0;
+  border-style: solid solid;
+  border-color: #8080f0;
+  border-width: 1pt;
+}
+
+div.group P {
+  margin-left: 1em;
+}
+
+div.subgroup {
+  /* background: #c0ffc0; */
+  /* background: #e0e0ff; */
+  margin: 1em;
+}
+
+div.subgroup P {
+  margin-left: 1em;
+}
+
+div.comment {
+  font-size: 90%;
+  text-align: right;
+  font-style: italic;
+}
+
+div.comment P {
+  margin-top: 0em;
+  margin-bottom: 0em;
+}

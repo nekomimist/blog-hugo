@@ -1,0 +1,212 @@
+diff -c ./lib/topic.rb.orig ./lib/topic.rb
+*** ./lib/topic.rb.orig	Tue Sep  4 16:54:46 2001
+--- ./lib/topic.rb	Tue Dec  4 22:51:12 2001
+***************
+*** 11,16 ****
+--- 11,17 ----
+    attr_accessor :replace
+    attr_accessor :diary
+    attr_reader :diary
++   attr_accessor :yearfilt
+  
+    def initialize
+      @topic            = ''
+***************
+*** 21,26 ****
+--- 22,28 ----
+      @replace = ''
+      @filename = ''
+      @diary    = nil
++     @yearfilt = nil
+  
+    end
+  
+***************
+*** 45,53 ****
+      @config          = d.config
+    end
+  
+!   def loadtopics
+      topic = {}
+!     Dir[@logDirectory + '[0-9]' * 6 + '.topic'].each{ |filename|
+        open(filename){ |file|
+          file.each{ |line|
+            t = line.chomp.split(/\t/)
+--- 47,55 ----
+      @config          = d.config
+    end
+  
+!   def loadtopics(year = '[0-9]' * 4)
+      topic = {}
+!     Dir[@logDirectory + year + '[0-9]' * 2 + '.topic'].each{ |filename|
+        open(filename){ |file|
+          file.each{ |line|
+            t = line.chomp.split(/\t/)
+***************
+*** 64,72 ****
+      @topic = Marshal::dump(topic)
+    end
+  
+  
+!   def tohtml(diarys, putmonth = true)
+!     loadtopics if @topic.empty?
+      body = ''
+      regexp  = Regexp::compile(@regexp)
+      pattern = Regexp::compile(@pattern)
+--- 66,95 ----
+      @topic = Marshal::dump(topic)
+    end
+  
++   def enumerate_years(diarys)
++     loadtopics(@yearfilt) # if @topic.empty?
++     body = ''
++     regexp  = Regexp::compile(@regexp)
++     pattern = Regexp::compile(@pattern)
++     topic = Marshal::load(@topic)
++     years = []
++ 
++     topic.delete_if { |month, days|
++       days.delete_if { |date, topics|
++         topics.delete_if { |line| regexp !~ line[1] }
++         topics.size.zero? or !diarys.include?(month + date)
++       }
++       days.size.zero?
++     }
+  
+!     topic.keys.each { |month|
+!       years << month[0..3].to_s
+!     }
+!     return years.sort.uniq
+!   end
+! 
+!   def tohtml(diarys, year, putmonth = true)
+!     loadtopics(year) # if @topic.empty?
+      body = ''
+      regexp  = Regexp::compile(@regexp)
+      pattern = Regexp::compile(@pattern)
+***************
+*** 117,140 ****
+      end
+    end
+  
+!   def writeHTML(diarys, putmonth = true)
+! 
+      @outputKcode = 1 if (@outputKcode < 1 or @outputKcode > 3)
+- 
+-     out = open(@outputDirectory + @skelton, "w")
+- 
+      begin
+!       infile = open(@logDirectory + @skelton)
+!       infile.each { |line|
+!         loadplugin(line)
+!         if line.gsub!(/<!--body-->/i, "") then
+!           out.print tohtml(diarys, putmonth).kconv(@outputKcode)
+!         end
+!         out.print line.kconv(@outputKcode)
+!       }
+!       infile.close
+! 
+!       out.close
+      rescue Errno::ENOENT
+        $stderr.puts "\n** error: topics skelton file: '#{@logDirectory + @skelton}' not found.\n"
+        return
+--- 140,175 ----
+      end
+    end
+  
+!   def writeHTML(diarys, sepyears = false, putmonth = true)
+      @outputKcode = 1 if (@outputKcode < 1 or @outputKcode > 3)
+      begin
+!       if sepyears == false then
+! 	out = open(@outputDirectory + @skelton, "w")
+! 	infile = open(@logDirectory + @skelton)
+! 	infile.each { |line|
+! 	  loadplugin(line)
+! 	  if line.gsub!(/<!--body-->/i, "") then
+! 	    out.print tohtml(diarys, '[0-9]'*4, putmonth).kconv(@outputKcode)
+! 	  end
+! 	  out.print line.kconv(@outputKcode)
+! 	}
+! 	infile.close
+! 	out.close
+!       else
+! 	enumerate_years(diarys).each { |year|
+! 	  out = open(@outputDirectory + @skelton + year.to_s + ".html", "w")
+! 	  infile = open(@logDirectory + @skelton + ".html")
+! 	  infile.each { |line|
+! 	    loadplugin(line)
+! 	    if line.gsub!(/<!--body-->/i, "") then
+! 	      out.print tohtml(diarys, year, putmonth).kconv(@outputKcode)
+! 	    end
+! 	    out.print line.kconv(@outputKcode)
+! 	  }
+! 	  infile.close
+! 	  out.close
+! 	}
+!       end
+      rescue Errno::ENOENT
+        $stderr.puts "\n** error: topics skelton file: '#{@logDirectory + @skelton}' not found.\n"
+        return
+diff -c ./ndiary-lib.rb.orig ./ndiary-lib.rb
+*** ./ndiary-lib.rb.orig	Tue Sep  4 16:54:46 2001
+--- ./ndiary-lib.rb	Thu Dec  6 01:24:41 2001
+***************
+*** 796,801 ****
+--- 796,802 ----
+  
+    # 最近の日記のダイジェスト作成
+    if ARGV.size.zero? then
++     year = pastDiary.allDiarys.keys.sort.reverse[0][0..3]
+      pastDiary.targetMonth = pastDiary.allDiarys.keys.sort.reverse[0][0..5]
+      pastDiary.makeHTML
+  
+***************
+*** 808,818 ****
+--- 809,821 ----
+  
+    # 年月を指定して作成
+    elsif ARGV[0] =~ /^(\d{6})$/ then
++     year = $1[0..3]
+      pastDiary.targetMonth = $1
+      pastDiary.makeHTML
+  
+    # 全日記ファイルを再作成
+    elsif ARGV[0].downcase == 'all' then
++     year = '[0-9]' * 4
+      for month in pastDiary.months
+        pastDiary.targetMonth = month
+        pastDiary.makeHTML
+***************
+*** 831,842 ****
+      t.topicMonthFormat = config['TOPIC_MONTH_FORMAT']
+      t.diary            = pastDiary
+      config['TOPIC'].each{ |topic|
+!       filename, regexp, pattern, replace = topic.split(/\t/)
+        t.skelton = filename
+        t.regexp  = regexp  ? regexp  : ''
+        t.pattern = pattern ? pattern : ''
+        t.replace = replace ? replace : ''
+!       t.writeHTML(pastDiary.allDiarys.keys)
+      }
+    end
+  
+--- 834,852 ----
+      t.topicMonthFormat = config['TOPIC_MONTH_FORMAT']
+      t.diary            = pastDiary
+      config['TOPIC'].each{ |topic|
+!       filename, regexp, pattern, replace, sepyear = topic.split(/\t/)
+        t.skelton = filename
+        t.regexp  = regexp  ? regexp  : ''
+        t.pattern = pattern ? pattern : ''
+        t.replace = replace ? replace : ''
+!       if filename =~ /html$/
+! 	sepyear = false
+! 	t.yearfilt = '[0-9]' * 4
+!       else
+! 	sepyear = true
+! 	t.yearfilt = year
+!       end
+!       t.writeHTML(pastDiary.allDiarys.keys, sepyear)
+      }
+    end
+  

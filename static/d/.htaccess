@@ -1,0 +1,6 @@
+AddHandler server-parsed .html
+
+<FilesMatch "^log$">
+order allow,deny
+deny from all
+</FilesMatch>

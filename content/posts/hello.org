@@ -1,0 +1,11 @@
+#+title: Hello
+#+date: 2023-08-13T10:44:43+09:00
+#+categories[]: よしなしごと
+#+tags[]: Hugo
+#+weight: 1
+#+draft: false
+
+古いコンテンツ→ [[http://www.nekomimist.org/d/][2007年あたりまでのWeb日記]] / [[http://www.nekomimist.org/novel.html][古いえろ小説]]
+
+
+

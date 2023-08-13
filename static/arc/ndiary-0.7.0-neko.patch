@@ -1,0 +1,97 @@
+diff -c ./ndiary-lib.rb.orig ./ndiary-lib.rb
+*** ./ndiary-lib.rb.orig	Tue Oct 05 09:07:00 1999
+--- ./ndiary-lib.rb	Tue Dec 14 21:04:21 1999
+***************
+*** 111,116 ****
+--- 111,118 ----
+    # 段落毎の処理
+    def makeParagraph(str)
+      str = Kconv::tosjis(str)
++     # なんか妙なものをパラグラフ処理しようとしている
++     return '' if str == ""
+  
+      # 無修正
+      if str[0,3] == "<<\n" then
+***************
+*** 120,127 ****
+  
+      # コード
+      elsif str[0,6] =~ /^Code:\n/i then
+!       str = str[6...str.size].expandtabs(4)
+!       "\t<div class=\"code\"><code><tt><pre>\n#{str}</pre></tt></code></div>\n\n"
+  
+      # 引用 <blockquote>
+      elsif str !~ /^[^\t]/ then
+--- 122,129 ----
+  
+      # コード
+      elsif str[0,6] =~ /^Code:\n/i then
+!       str = str[6...str.size].expandtabs(8)
+!       "\t<div class=\"code\"><pre><code>#{str}</code></pre></div>\n\n"
+  
+      # 引用 <blockquote>
+      elsif str !~ /^[^\t]/ then
+***************
+*** 153,159 ****
+      # 通常段落 <p>
+      elsif str != '' then
+        @cntParagraph += 1
+-       str.gsub!("\n","<br>\n\t")
+        str = makeFootNote(str)
+        if @paragraphAnchor then
+          "\t<p><a name=\"#{@dd}_#{@cntParagraph}\" href=\"#{@yyyy}#{@mm}.html##{@dd}_#{@cntParagraph}\">#{@header}</a>\n\t#{str}</p>\n\n"
+--- 155,160 ----
+***************
+*** 171,177 ****
+    def getBody
+  
+      if SHOW_VERSION then
+!       body = "\n<div align=\"right\" class=\"version\">Ganerated by "
+        body << "<a href=\"http://www14.cds.ne.jp/~not/product/ndiary/\">"
+        body << NDIARY_VERSION << "</a></div>\n<hr>\n\n"
+      else
+--- 172,178 ----
+    def getBody
+  
+      if SHOW_VERSION then
+!       body = "\n<div class=\"version\">Ganerated by "
+        body << "<a href=\"http://www14.cds.ne.jp/~not/product/ndiary/\">"
+        body << NDIARY_VERSION << "</a></div>\n<hr>\n\n"
+      else
+***************
+*** 192,199 ****
+        @dd = @date[6..7]
+  
+        objDate = Time.local(@yyyy, @mm, @dd)
+-       body << objDate.strftime2("<h4><a name=\"#{@dd}\" href=\"#{@yyyy}#{@mm}.html##{@dd}\">#{@format}</a></h4>\n")
+        body << "<div class=\"day\">\n\n"
+  
+        # Read Diary File
+        str = ''
+--- 193,200 ----
+        @dd = @date[6..7]
+  
+        objDate = Time.local(@yyyy, @mm, @dd)
+        body << "<div class=\"day\">\n\n"
++       body << objDate.strftime2("<h4><a name=\"#{@dd}\" href=\"#{@yyyy}#{@mm}.html##{@dd}\">#{@format}</a></h4>\n")
+  
+        # Read Diary File
+        str = ''
+***************
+*** 213,219 ****
+  
+        # 脚注追加
+        if @strFootNote != ''
+!         body << "\t<hr width=\"40%\" align=\"left\"><div class=\"footnote\">\n#{@strFootNote}<br>\n\t</div>\n"
+        end
+  
+        # 末尾追加
+--- 214,221 ----
+  
+        # 脚注追加
+        if @strFootNote != ''
+!         body << "\t<div class=\"footnote\"><hr>\n"
+! 	body << "#{@strFootNote}\n\t</div>\n"
+        end
+  
+        # 末尾追加

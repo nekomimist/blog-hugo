@@ -1,0 +1,195 @@
+/* 日記専用 */
+body { 
+    line-height: 130%;
+    font-size: 100%;
+/*background: #f8f8ff;*/
+}
+
+/* bodyとside */
+/* 960pix未満のときは1カラムにする (下に長すぎだけどな) */
+@media only screen and (max-width: 959px) {
+    div.main {
+	width: 100%;
+    }
+    div.side {
+	font-size: 80%;
+	background-color: #ffeeee;
+	margin: 1em 0.5em 0.5em 0.5em;
+    }
+    div.side h2 {	/* sidebar subjects */
+	font-size: 100%;
+	margin: 1em 0.5em 0.5em 0.5em;
+	border-style: none none solid none;
+	border-color: black;
+	border-width: 1.5pt;
+    }
+    div.sidebanner {
+	margin: 0.5em 1em 0.5em 1em;
+    }
+}
+
+/* 960pix以上のときに2カラムにする */
+@media screen and (min-width: 960px) {
+    div.main {
+	float: left;
+	width: 78%;
+    }
+    div.side {
+	float: right;
+	width: 20%;
+ 	font-size: 80%;
+	background-color: #ffeeee;
+	margin: 1em 0.5em 0.5em 0.5em;
+    }
+    div.side h2 {	/* sidebar subjects */
+	font-size: 100%;
+	margin: 1em 0.5em 0.5em 0.5em;
+	border-style: none none solid none;
+	border-color: black;
+	border-width: 1.5pt;
+    }
+    div.sidebanner {
+	margin: 0.5em 1em 0.5em 1em;
+    }
+}
+
+/* 妄想 */
+div.moso {
+    background-color: white;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+div.moso span.neko span.name { 
+    color: green;
+}
+div.moso span.rinn span.name { 
+    color: purple;
+}
+div.moso span.shiwori span.talk { 
+    color: red;
+}
+div.moso span.neko span.talk { 
+    color: green;
+}
+div.moso span.rinn span.talk {
+    color: purple;
+}
+div.moso span.shiwori span.name {
+    color: red;
+}
+
+/* ndiary本体用 */
+div.oneday {
+    background-color: #ffeeee;
+}
+div.index,div.version {
+    text-align: right;
+}
+div.schedule { 
+    border-style: solid solid;
+    border-color: black;
+    border-width: 0.5pt;
+    color: black;
+    background-color: white;
+    margin: 0.5em;
+    clear: both;
+}
+div.schedule h2 {
+    font-size: 100%;
+    background-color: #ffeeee;
+    border: none;
+    margin: 0em;
+    padding: 0em 0em 0em 0.5em;
+}
+table.calendar,table.google {
+    margin-left: auto;
+    margin-right: 0%;
+}
+div.oneday h2 {	/* date */
+    background-color: #ffc0c0;
+    font-size: larger;
+    border-bottom: none;
+    padding-left: 0.5em;
+    margin-bottom: -0.5ex;
+}
+div.oneday h3 {	/* topics */
+    font-size: 100%;
+    margin: 1em 0.5em 0.5em 0.5em;
+    border-style: none none solid none;
+    border-color: black;
+    border-width: 1.5pt;
+}
+div.oneday h4 {	/* subtopics */
+    font-size: 100%;
+    margin: 1em 0.5em 0.5em 0.5em;
+    border-style: none none solid none;
+    border-color: black;
+    border-width: 0.6pt;
+}
+div.oneday p {
+    margin: 0.5em 1.5em;
+    padding-left: 0.0em;
+    text-indent: -0.8em; /* イヤかも */
+    text-align: justify;
+    text-justify: distribute;
+/*text-justify: inter-ideograph; */
+}
+div.oneday blockquote {
+    margin: 0.5em 0.5em;
+    padding: 0.5em 0.5em;
+    border-style: none;
+    border-color: purple;
+    border-width: 0.5pt;
+    background-color: #fff8f8;
+}
+div.footnote {
+    border-top: solid;
+    border-color: black;
+    border-width: 1pt;
+    font-size: 80%;
+}
+div.footnote hr {
+    width: 40%;
+    text-align: left;
+    margin-left: 0px;
+    clear: both;
+}
+div.oneday div.code {
+    margin: 0.5em 0.5em;
+    padding: 0.5em 0.5em;
+    line-height: 100%;
+    border-style: none;
+    border-color: black;
+    border-width: 1pt;
+    font-family: monospace;
+    background-color: #fff8f8;
+}
+div.code pre {
+    margin: 0 0;
+    padding: 0 0;
+}
+div.caution {
+    font-size: 80%;
+    line-height: 80%;
+}
+span.footnoteref { 
+    vertical-align: top;
+    font-size: smaller;
+}
+
+/* amazon4.rb用 */
+div.bibinfo {
+    background-color: #ffe0e0;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+/* activate block */
+.onedayactive { 
+    background-color: #f8f8a0;
+    border : dotted 1px;
+}

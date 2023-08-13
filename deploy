@@ -1,0 +1,4 @@
+#!/bin/sh
+hugo && rsync -avz --delete public/ nekomimist:~/www
+
+exit 0
