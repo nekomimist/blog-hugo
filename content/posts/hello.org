@@ -5,7 +5,16 @@
 #+weight: 1
 #+draft: false
 
-古いコンテンツ→ [[http://www.nekomimist.org/d/][2007年あたりまでのWeb日記]] / [[http://www.nekomimist.org/novel.html][古いえろ小説]]
+* 現コンテンツ
+- 上の search / archives / categories / tags あたりを参照のこと
 
+* 古いコンテンツ
+- [[http://www.nekomimist.org/d/][2007年あたりまでのWeb日記]]
+- [[http://www.nekomimist.org/novel.html][古いえろ小説]]
 
-
+* 連絡先
+- X(Twitter) https://x.com/nekomimist
+- Fedibird   https://fedibird.com/@nekomimist
+- みすきー   https://misskey.io/@nekomimist
+- bluesky    https://bsky.app/profile/nekomimist.bsky.social
+- github	http://github.com/nekomimist

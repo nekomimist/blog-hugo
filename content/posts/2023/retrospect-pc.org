@@ -1,0 +1,62 @@
+#+title: 2023年の振り返り(PC編)
+#+date: 2023-12-30T16:26:04+09:00
+#+Categories[]: COMP
+#+Tags[]: Hardware
+
+** FreeBSDのファイルサーバを停止して、Synology DS923+に変更
+Core i7 8700K+メモリ32GB+HDD9台(3TB×5+4TB×4)のFreeBSDマシン、HDDを大容量に移行するのも面倒だし、PC的には限界だったのでかわりにSynology DS923+HDD3台(20TB×3)を購入した。
+
+長い間FreeBSDマシンが自宅で稼動していたので、無くなるのは寂しくもある。まあ、あまり活用もできていなかったのでしょうがない。
+
+** メインデスクトップPCの段階的な構成変更
+いろいろあった。
+
+1. Stable Diffusion webuiによるAI描画にハマる。
+2. VRAM 8GBのRTX3070だとLoRA学習が厳しい事もあり、VRAM 12GBのRTX4070Tiと電源を買う。
+3. WindowsのGPUとして使った上で、CUDAで利用するとメモリのフラグメントでよくエラーになった。生成やLoRA作成が止まるだけでなく、Windows表示そのものが死んだりもするので実につらい。
+4. RTX3070+RTX4070Tiの2枚指しにして、RTX3070をWindows画面用に専念させたら快適😄
+5. ASRock X570 Steel Legendの制限により、RTX3070+RTX4070Tiの2枚指しにすると、10GbEのフル帯域を出せるPCIeスロットが余らなくて、LANの性能がかなり落ちた
+6. メインPCをRyzen 7950X3D + ASUS ProArt X670E-CREATOR WIFI + 96GB RAM(48GB DDR5×2)に変更。10GbEがオンボードなのでソケットに余裕ができてラッキー❤️
+7. しかしスロット配置の問題で、X570 Steel Legendの時よりケース下側のGPUスペースがつらくなり、ケーブルと干渉してファンが回らなくなったりした。
+8. イラついてCUDA用のマシンを旧メインPCパーツ(Ryzen 5900X + X570 Steel Legend WiFi ax + 96GB RAM(32GB×2+16GB×2)を利用して独立させた。OSはUbuntu Server 22.04。ケースと電源は新調した(Fractal Design Meshify 2とCORSAIR RM850e)。
+9. Ubuntu 22.04でTehuti TN4010B0の10GbEを動かすのに苦労した。
+   - Kernel標準ではなく、かつ正式公開されているソースは最新カーネルではコンパイルできない。
+   - コンパイルできるようメンテしている人のgithubをいくつか見て対策したら、DKMSでちゃんと動くものをコンパイルできるようになった。
+   - しかし安定せず、メモリ使用量が増えた局面でメモリ破壊っぽいKernel Panicがしばしば発生した。
+10. Kernel標準で対応しているAQC107の10GbEを買った。Panicは出なくなった。
+
+結果、1台のメインPCが2台のPCに分割された。
+
+before.
+- AMD Ryzen 5900X + ASRock X570 Steel Legend WiFi ax + 64GB RAM(32GB DDR4×2) + RTX3070
+
+After.
+- AMD Ryzen 7950X3D + ASUS ProArt X670E-CREATOR WIFI + 96GB RAM(48GB DDR5×2) + RTX3070
+- AMD Ryzen 5900X + ASRock X570 Steel Legend WiFi ax + 96GB RAM(32GB DDR4×2 + 16GB DDR4×2) + RTX4070Ti
+  
+** 液タブ購入
+
+PC初期の頃から絵は描いていて、1994年頃は草の根BBSにアップロードしたり、電脳倶楽部に投稿したりしていたし、1996年頃はときパ2でラミバッジを売ったり冬コミの同人誌やCG集に参加したりしていたけれど、誰かに見せるために何か描いていたのはいいとこ2003年までで、その後もSurface Pro 4やPro 7を買ってから描こうと試したことはあったのだが、ペンの感覚もサイズもイマイチでどうにも継続して描けていなかった。
+
+で、Stable Diffusionで遊んでいて、自分の好みの絵柄を出せるようモデルのmergeやLoRA作成などをいろいろやっているうちに、「自分の好みの絵を描くこと」に対する思いが生まれて、それで「令和における自分の絵」を再定義したくなって液タブを買ってみた。
+
+今回買うにあたって、ペンの感触がよいこと、サイズはSurface Pro4/7(12.3インチ)より充分に大きいことに着目していろいろ調べた結果、[[https://www.itmedia.co.jp/pcuser/articles/2309/11/news014.html][refeiaさんのこの記事]]が決め手になってXPPenのArtist Pro 16 (Gen2)を買った。
+
+{{< tweet user="nekomimist" id="1738571036617327062" >}}                                        
+
+サイズ感も描き味もよく満足。さらさら落書きをしている。おもしろい。
+
+** モバイルPC
+Ice LakeなSurface Pro 7はさすがに非力なのでそろろ更新したいが、心が動くPCが出なかったので、これは2024年の課題だろう。
+
+** ネットワーク構成変更
+*** 10GbEのLAN構成変更
+FreeBSDサーバとメインPCの2台だけが10GbEだったで、10GbE×2+2.5GbE×4のBuffalo LXW-10G2/2G4でまかなえていたのだが、メインPC/サブPC/NASの3台が10GbEになった事もあり、なんかしらんが異様に安くなっていたXS505M-100AJSを追加した。
+
+*** ルータの変更
+ひかり電話ありのフレッツなので、ずっとHGWのRT-500MIを利用していたのだが、うちの地域のOCNがこれを利用したIPv4 IPoE接続をさっぱりやってくれずIPv4のWiFiルータを置いたりもしたが、LAN側の構成がすっきりしなかったので、NVR510に交換して整理した。
+
+何でもできるわけではないが、細かいことは何に設定できないRT-500MIよりだいぶわかりやすくなった。なぜもっと早くこうしなかったか……。
+
+** というわけで
+PC構成もネットワーク構成も大幅に変わった1年だった。来年以降はかなり落ちつくはず。

@@ -1,0 +1,178 @@
+#+title: 2023年の振り返り(Emacs編)
+#+date: 2023-12-30T18:04:27+09:00
+#+Categories[]: COMP
+#+Tags[]: Emacs
+#+options: ^:{} toc:nil author:nil num:nil
+#+startup: showall inlineimages
+
+** 起動速度のこと
+
+init.elの初期化処理で時間がかかる事は起動後にやるようにした。
+参考文書は定番とも言える下記2点。
+
+- [[https://zenn.dev/zk_phi/books/cba129aacd4c1418ade4][Emacs の起動時間を""詰める""]]
+- [[https://zenn.dev/takeokunn/articles/56010618502ccc][Emacsを世界最速級で起動する方法]]
+
+#+begin_src elisp
+(defvar my/delayed-configs nil)
+(defvar my/delayed-config-timer nil)
+
+(eval-and-compile
+  (defconst my/prio-low    1)
+  (defconst my/prio-normal 10)
+  (defconst my/prio-urgent 100))
+
+(defun my/add-to-delayed-configs (priority config)
+  "Add CONFIG with PRIORITY to delayed configs."
+  (push (cons priority config) my/delayed-configs)
+  ;; sort the configs by priority
+  (setq my/delayed-configs (sort my/delayed-configs (lambda (a b) (> (car a) (car b))))))
+
+(defun my/start-delayed-configs ()
+  "Execute `my/delayed-configs` list using a timer.
+
+Start a timer to run each config in the list with a default interval of 10ms.
+The timer runs until all configs are executed, then it stops.
+Customize interval with `my/delayed-config-interval`.
+Delayed configs can impact your Emacs environment."
+  (setq my/delayed-config-timer
+        (run-with-timer 0.0 0.01 ; start after 0ms with 10ms interval
+                        (lambda ()
+                          (let ((inhibit-message t))
+                            ;; if there is a config, execute it
+                            (if-let (config (cdr (pop my/delayed-configs)))
+                                (eval config)
+                              ;; if there is no config, cancel the timer
+                              (cancel-timer my/delayed-config-timer)))))))
+
+(add-hook 'after-init-hook 'my/start-delayed-configs)
+#+end_src
+
+こんなのを書いて、
+
+#+begin_src elisp
+(leaf igist
+  :ensure t
+  :init
+  (with-delayed-startup-exec my/prio-low
+    (leaf-key "C-c o g" 'igist-dispatch)
+    (setopt igist-current-user-name "nekomimist")
+    (setopt igist-auth-marker 'igist)))
+#+end_src
+
+こんなふうに使っている。leafの:customと:bindも遅延起動できるといいのだが、そういう記法はないので、
+with-delayed-startup-execの中でsetoptとleaf-keyを直接使うようにしている。
+
+あとはpackage.elの初期化まわりの処理を見直した。最近のEmacs[fn:latest-emacs]はpackage-enable-at-startupがtである限り、(package-initialize)は不要なので、leaf.elの初期化ブロックをそのように変更した。
+#+begin_src elisp
+  (unless package-enable-at-startup
+    (package-initialize))
+#+end_src
+(package-initialize)はとても遅い処理なのでこれでけっこう早くなる。
+
+[fn:latest-emacs]: Emacs27あたりだったはず。
+
+2022年最後の段階で、emacs -nwでのemacs-init-timeが270ms程度。
+
+{{< tweet user="nekomimist" id="1608392360991543296" >}}                                        
+
+2023年末現在は、このpostの頃とあまり変わらず85ms程度。
+
+{{< tweet user="nekomimist" id="1712993274598953370" >}}                                        
+
+WSL2上での速度なので、たとえばnative linuxでやればさらに早くなるだろう。
+
+** Packageの追加/廃止
+
+今年もいろいろ入れかえた。
+
+- el-get -> package-vc ::
+  今までELPA/NonGNU ELPA/MELPAにないパッケージはel-getを使っていたが、
+  Emacs 29以上ではpackage-vcでgithubから持ってくれるので、Emacs29以降では
+  el-getを全廃した。
+- shackle -> [[https://github.com/karthink/popper][popper]] ::
+  なんかうまく動いていないのに気付いたので変更。
+- [[https://github.com/karthink/project-x][project-x]] ::
+  標準のproject.elを補うパッケージ。
+  project-rootの.projectに状態を保存してくれたりする。
+- [[https://github.com/john2x/nameframe][nameframe & nameframe-project]] ::
+  projectを開くとproject名のframeを開くようになる。
+  前述のproject-xと組み合わせるとどうかな？ということでトライ中。
+- sequential-command -> [[https://github.com/alphapapa/mosey.el][mosey]] ::
+  sequential-commandってメンテされてないよねってことでなんとなく。
+- [[https://github.com/renzmann/treesit-auto][treesit-auto]] ::
+  Emacs29で入ったtreesitter integrationを補うパッケージ。
+  tree-sitter対応のmajor-modeが使えるならtree-sitterモジュールも入れてくれる等。
+- multiple-cursors -> [[https://github.com/corytertel/macrursors][macrursors]] ::
+  macurosorsはmeowのBEACONモードみたいな挙動でマルチカーソル編集ができる。
+  multiple-cursorsがcursorを増やすととんでもなく重くなるけど、macrursorsは軽い。
+- deft -> [[https://github.com/casouri/xeft][xeft]] ::
+  Xapianでメモを検索できて軽い。
+  dynamic-moduleはwindowsでも動くんだけど、日本語ファイル名食えない(なぜならUTF-8固定だと思っているから)windows環境はdeftのまま。まあ、windowsが悪いよ。
+  作者がemacs-develでよく見るYuan Fuなので、メンテの継続性も期待できるんじゃないかなと。
+- zetteldeft -> [[https://git.sr.ht/~protesilaos/denote][denote]] ::
+  前述の通りdeftを止めたので、deftに頼らずnote takingできるdenoteに。
+  作者がmodus-theme等のProtesilaos Stavrouなので、メンテの継続性も期待できるかなと。
+- [[https://github.com/mclear-tools/tabspaces][tabspaces]] ::
+  Emacsのtab-barの拡張。ただ、あまり活用できてない。
+- [[https://github.com/karthink/consult-dir][consult-dir]] ::
+  ミニバッファで作業中でも開けるconsultベースのdir名入力ツール。わりと便利かも?
+  popperやgptelの作者karthinkなのでメンテの継続性も期待できるかな、と。
+- all-the-icons→kind-icon→[[https://github.com/rainstormstudio/nerd-icons.el][nerd-icons]] ::
+  GUIだけならSVGで描画する[[https://github.com/jdtsmith/kind-icon][kind-icon]]のほうがフォント依存がなくてよい点もあるのだが、EmacsでもWindows Terminalでもnerdフォントが入ったフォント([[https://github.com/yuru7/HackGen][HackGen_NF]])を使っているのでnerd-iconsに移行した。おかげでemacs -nwでもiconが出せる。
+- [[https://github.com/KarimAziev/igist][igist]] ::
+  gistのファイルを一覧で表示したり編集したりできる。便利。
+- ibuffers - >[[https://github.com/alphapapa/bufler.el][bufler]] ::
+  標準のibuffersより便利かなと思って入れてみた。
+  プロジェクト単位で自動グルーピングできるのが便利。
+- [[https://github.com/jojojames/dired-sidebar][dired-sidebar]] -> [[https://github.com/Alexander-Miller/treemacs][treemacs]] ::
+  treemacsで好みの挙動を得ようとしていろいろhookやらを仕込んでいるのがイヤになってdired-sidebarに移行してたんだけど、やっぱり別の方向でいろいろやる羽目になって、だったらtreemacsのほうがよかったやんということに……。
+- [[https://github.com/karthink/gptel][gptel]] ::
+  ChatGPTを使えるシンプルなパッケージ……だったけど、最近いろんなものがバックエンドに使えるようになった。個人的にはChatGPTしか使ってないのだが、その範囲ではシンプルで使いやすい。
+  あと、gptel-requestを使ってカスタム問い合わせ関数を作るのも簡単にできて、非常によい。こんなのを書いて、任意の選択範囲あるは行を、任意のdirectiveで一撃で問い合わせできるようにしている。
+#+begin_src elisp
+    (defun my/gptel-query-send (bounds directive)
+      "Send a query to ChatGPT.
+Convert BOUNDS into plain text and add DIRECTIVE before sending it to ChatGPT.
+If executed interactively, BOUNDS can be either a region/line and DIRECTIVE
+prompts the user for input."
+      (interactive
+       (list
+	(cond
+	 ((use-region-p) (cons (region-beginning) (region-end)))
+	 (t (cons (line-beginning-position) (line-end-position))))
+	(completing-read "ChatGPT Directive: " my/gptel-query-send-directive-history
+			 nil nil nil 'my/gptel-query-send-directive-history)))
+      (when (string= directive "") (user-error "A directive is required"))
+      (gptel-request
+       (buffer-substring-no-properties (car bounds) (cdr bounds)) ; the prompt
+       :system directive))
+#+end_src
+- [[https://github.com/ywkim/gpt-commit][gpt-commit]] ::
+  gitのdiffを送ってcommit-messageを作ってくれる。便利かどうかはわりと悩ましいかもしれない。
+- [[https://github.com/jpkotta/immortal-scratch][immortal-scratch]] ::
+  scratch-bufferを殺しても復活する。定番だとは思うのが、何故か入れてなかった。
+- [[https://github.com/mina86/auto-dim-other-buffers.el][auto-dim-other-buffers]] ::
+  カーソルのないウィンドウの背景色を変えてくれる。
+  着目しているウィンドウがどこかがわかりやすくなる。
+- [[https://git.sr.ht/~protesilaos/pulsar][pulsar]] ::
+  カーソルがぽんと飛ぶ操作の後にカーソル行がパルスのように光る。
+  カーソル位置を見失いづらくなる。
+- [[https://github.com/cyrus-and/zoom][zoom]] ::
+  カーソルがいるウィンドウの表示領域が「いい感じ」に拡大される。
+  わりとよい感じに使えている。
+- [[https://github.com/alphapapa/dogears.el][dogears]] ::
+  カーソルがいた場所の履歴を辿れる。標準だと俺の使い方にあまり合わないので、いろんな関数でdogears-rememberを呼ぶようにhookに仕込んだちadviceしまくっている。
+  [[https://github.com/gitrj95/trail.el][trail.el]]の思想のほうが好きな気もするので、悩み中。
+- [[https://github.com/astoff/jit-spell][jit-spell]] ::
+  flyspellだとカーソルがあるあたりにだけしかチェックしないのだけど、こいつはバックグラウンドでispellを起動して全バッファチェックできる。libenchantを使う[[https://github.com/minad/jinx][jinx]]のほうが軽いのだが、日本語に対する挙動の制御の仕方がよくわからかなったので、jit-spellを使っている。
+- [[https://gitlab.com/Vonfry/zoxide.el][zoxide.el]] ::
+  シェルでzoxideを使っているので一応入れたが、あまり使っていない。
+- [[https://github.com/meow-edit/meow][meow]] → × ::
+  Emacsのmodal editingパッケージ。標準のEmacsキーバインドをあまり阻害しないように作られているせいか、無意識にInsertモードに入ってmeowの機能を使わずに編集していることに気付いたので止めた。
+  ただ、BEACONモードは面白いと思った。
+- tree-sitter → × (emacs29以降) ::
+  Emacs29でtree-sitter integrationが入ったので、とりあえず外した。
+  Emacs28以前では使うようにしてあるけれど、そもそもEmacs28以前はあまり使わない。
+- zygospore → × ::
+  C-x 1で閉じたwindowを再度同じ操作で開けるようにするものなのだが、なんかうまく動かなくなっていたので消した。
