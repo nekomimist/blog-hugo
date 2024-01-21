@@ -29,7 +29,7 @@ params:
 
   ShowReadingTime: true
   ShowShareButtons: true
-  ShareButtons: ["twitter"]
+  ShareButtons: ["twitter", "bluesky"]
   ShowPostNavLinks: true
   ShowBreadCrumbs: true
   ShowCodeCopyButtons: false
@@ -76,14 +76,17 @@ params:
   # home-info mode
   homeInfoParams:
     Title: "ねこみみすと工房 \U0001F44B"
-    Content: Welcome to webpage!
-    buttons:
-
+    Content: 某メーカーの組み込みソフト屋。昔はマイコンでモーター動かしたりしてたけど、最近はLinuxばかり。<br />
+             最近の興味範囲は 自作PC・自作キーボード・3Dプリンタ(SnakeOilXY-3S/VORON V0.739/VORON VT.496)と艦これ。<br />
+             <br />
+             刷新前のコンテンツは [Hello](http://www.nekomimist.org/posts/hello) あたりを参照すれば辿れます。
   socialIcons:
-    - name: twitter
-      url: "https://twitter.com/nekomimist"
+    - name: bluesky
+      url: "https://bsky.app/profile/nekomimist.bsky.social"
     - name: mastodon
       url: "https://fedibird.com/@nekomimist"
+    - name: twitter
+      url: "https://twitter.com/nekomimist"
     - name: github
       url: "https://github.com/nekomimist"
 

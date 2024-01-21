@@ -9,12 +9,12 @@
 - 上の search / archives / categories / tags あたりを参照のこと
 
 * 古いコンテンツ
-- [[http://www.nekomimist.org/d/][2007年あたりまでのWeb日記]]
+- [[http://www.nekomimist.org/d/][2017年あたりまでのWeb日記]]
 - [[http://www.nekomimist.org/novel.html][古いえろ小説]]
 
 * 連絡先
-- X(Twitter) https://x.com/nekomimist
+- bluesky    https://bsky.app/profile/nekomimist.bsky.social
 - Fedibird   https://fedibird.com/@nekomimist
 - みすきー   https://misskey.io/@nekomimist
-- bluesky    https://bsky.app/profile/nekomimist.bsky.social
-- github	http://github.com/nekomimist
+- X(Twitter) https://x.com/nekomimist
+- github     http://github.com/nekomimist
